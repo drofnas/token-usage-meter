@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 FONTS = (('small', 9, False), ('label', 11, True), ('body', 12, False),
-         ('title', 16, True), ('provider', 23, True), ('quota', 34, True))
+         ('title', 16, True), ('provider', 23, True), ('quota', 30, True))
 
 
 def generate(directory):

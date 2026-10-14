@@ -13,6 +13,7 @@ These are native firmware renderer captures using synthetic readings at the targ
 - The default is portrait, with both providers and their available windows visible. Rotation labels follow the original app: **90° and 270° are portrait**, 0° and 180° are landscape.
 - Available subscription resets appear as a reload icon and number, right-aligned beside the provider title. Zero, unsupported, unknown, and stale counts stay hidden. Codex supplies this count; Claude currently does not.
 - Missing 5-hour windows hide automatically; weekly usage expands into that space. There is no hard-coded subscription tier list.
+- Quota percentages use a consistent font size within each orientation, including `100%` and `>99%`. Portrait values fit above the 100-pixel bars without shrinking individual readings.
 - Disabling a provider hides it on this device; it does **not** stop the host collector polling. Hidden providers retain their 5-hour preference. Settings remain reachable with both providers off.
 - A failed or stale refresh keeps the last reading with a warning. An expired window says “Reset pending”; the display never invents a refill.
 

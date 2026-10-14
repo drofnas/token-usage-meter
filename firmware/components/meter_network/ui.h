@@ -171,8 +171,7 @@ template<class Canvas> void draw_settings(Canvas &c,const Frame &f,int width) {
 template<class Canvas> void draw_limit(Canvas &c,const Limit &f,const char *label,int x,int y,int width,uint32_t accent,bool stale) {
   const uint32_t color=stale||f.due?WARN:accent;
   text(c,x,y,label,font::label,INK);
-  const auto &number_font=text_width(f.value,font::quota)<=width?font::quota:font::provider;
-  text(c,x,y+19,f.value,number_font,f.known?INK:MUTED);
+  text(c,x,y+19,f.value,font::quota,f.known?INK:MUTED);
   rounded(c,x,y+56,width,6,2,TRACK);
   if(f.known&&f.fill)rounded(c,x,y+56,std::max(1,width*f.fill/100),6,2,color);
   text(c,x,y+72,f.reset,font::small,f.due?WARN:MUTED);

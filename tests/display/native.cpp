@@ -164,13 +164,41 @@ void test_resets(const meter::Model &model) {
   }
 }
 
+void test_quota_size() {
+  const int narrow_width=(meter::orientation::width(1)-40)/2;
+  for(int value=0;value<=100;++value) {
+    const auto limit=meter::ui::project_limit({true,static_cast<double>(value),0},0);
+    assert(meter::ui::text_width(limit.value,meter::font::quota)<=narrow_width);
+  }
+  for(const char *value:{"0%","1%","62%","99%","100%","<1%",">99%","--%"}) {
+    assert(meter::ui::text_width(value,meter::font::quota)<=narrow_width);
+    for(int width:{narrow_width,meter::orientation::width(1)-24}) {
+      meter::ui::Limit limit;limit.known=!meter::eq(value,"--%");std::strcpy(limit.value,value);
+      Canvas actual(1),expected(1);
+      meter::ui::draw_limit(actual,limit,"WEEKLY",12,80,width,meter::ui::CODEX,false);
+      meter::ui::text(expected,12,99,value,meter::font::quota,limit.known?meter::ui::INK:meter::ui::MUTED);
+      // Narrow and full-width cards must render the same glyphs for every percentage.
+      for(int y=99;y<99+meter::font::quota.height;++y)for(int x=0;x<actual.width*3;++x) {
+        assert(actual.pixels[y*actual.width*3+x]==expected.pixels[y*actual.width*3+x]);
+        if(actual.pixels[y*actual.width*3+x])assert(x/3>=12&&x/3<12+width);
+      }
+    }
+  }
+}
+
 int main(int argc,char **argv) {
   assert(argc==3);
   std::ifstream in(argv[1]);std::string raw((std::istreambuf_iterator<char>(in)),{});
   while(!raw.empty() && (raw.back()=='\n' || raw.back()==' ' || raw.back()=='\r'))raw.pop_back();
-  meter::Model model;test_model(raw,model);test_settings();test_resets(model);
+  meter::Model model;test_model(raw,model);test_settings();test_resets(model);test_quota_size();
   const std::filesystem::path output=argv[2];std::filesystem::create_directories(output);
   meter::State state;assert(state.accept(model,0));
+  auto sample=state;
+  sample.model.providers[0].five_hour={true,100,0};sample.model.providers[0].weekly.remaining=62;
+  sample.model.providers[1].five_hour={};sample.model.providers[1].weekly.remaining=94;
+  meter::settings::Controller preview_settings;
+  auto preview=meter::ui::project(sample,0,preview_settings);preview.battery=100;
+  Canvas preview_canvas(1);meter::ui::draw(preview_canvas,preview,1);preview_canvas.save(output/"full-percentage.ppm");
   int rendered=0;
   for(int pos=0;pos<4;++pos)for(int flags=0;flags<16;++flags)for(bool menu:{false,true}) {
     meter::settings::Controller settings;settings.values.position=pos;settings.values.flags=flags;settings.menu=menu;
