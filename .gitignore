@@ -1,0 +1,34 @@
+.DS_Store
+# Local environments, build state, and tool caches.
+.esphome/
+.venv/
+__pycache__/
+.cache/
+go-cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pio/
+.platformio/
+secrets.yaml
+secrets.*.yaml
+*.local.yaml
+artifacts/
+.env
+.env.*
+!.env.example
+!secrets.example.yaml
+/.local/
+# Firmware embeds local Wi-Fi credentials and the dedicated meter token.
+*.bin
+*.elf
+*.map
+*.log
+*.jsonl
+*.pem
+*.key
+auth.json
+
+.tmp/
+credentials.json
+.credentials.json

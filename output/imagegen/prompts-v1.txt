@@ -1,0 +1,56 @@
+CYD Claude + Codex usage meter — UI mockups
+
+Generation method: built-in image_gen tool.
+Target device: 320 x 240 landscape; final PNGs are enlarged concept mockups.
+Data: synthetic examples; percentages represent quota remaining, not raw token counts.
+
+Intended behavior for implementation:
+- The gear opens device settings; back returns to usage.
+- Claude and Codex can each be enabled or disabled on-device.
+- Each provider's 5-hour gauge can be hidden independently.
+- When a 5-hour gauge is hidden, the weekly gauge expands across that provider's section.
+- Do not infer the presence of a 5-hour limit solely from a subscription tier. Render supported windows from provider data; absent windows should not display fake values.
+- Rotation offers 0, 90, 180 and 270 degrees from settings.
+- Settings apply immediately and persist across restarts.
+- Firmware, collectors and integrations are not implemented by these mockups.
+
+MAIN UI PROMPT
+
+Use case: ui-mockup
+Asset type: high-fidelity flat screen mockup for an ESP32 CYD 2.8-inch touchscreen usage meter.
+Primary request: Design a clear, compact main screen showing Claude and Codex subscription limits, with each provider's 5-hour and weekly quota remaining. This is one flat landscape screen, designed for exactly 320 x 240 logical pixels, rendered at a clean 5x enlargement (1600 x 1200). Edge-to-edge UI, with no device bezel, no desk, no perspective and no surrounding poster.
+Style: implementable embedded-device UI, crisp readable compact sans-serif typography, simple flat rectangles, minimal icons, no gradients or shadows. Inspired by the existing meter's dark background, pale text and cyan gauges, refreshed for two providers. No charts, daily history, token totals or decorative artwork.
+Color palette: background #101820; primary text #F3F6F7; secondary text #AAB8C2; track #324450; Claude accent muted warm orange #D99A78; Codex accent bright cyan #63DFC1. Text and labels remain very high contrast.
+Layout, stated in native 320 x 240 logical pixels:
+- Compact header from y=0 to 35: left-aligned "USAGE", then small "REMAINING". On the right a simple battery icon with "72%" and a simple gear in a 40 x 36 touch area. Gear opens settings.
+- Two provider sections stacked vertically, with a fine divider at y=135. Claude section from y=40 to 128, Codex from y=141 to 230. Outer horizontal margin 12. No card borders or oversized rounded containers.
+- Each provider heading is a prominent uppercase name in its accent color.
+- Below each heading, two equal columns separated by 16 logical pixels: left labeled "5HR LIMIT", right labeled "WEEKLY".
+- Each column has a large percentage, a thin horizontal gauge proportional to remaining capacity, and a short legible reset countdown. Four numbers must be equally prominent. Number text about 27 logical pixels high; label 10 pixels; reset text 9 pixels. Every component must fit the actual 320 x 240 grid.
+Exact visible UI text:
+Header: "USAGE", "REMAINING", "72%".
+First provider: "CLAUDE".
+Claude left: "5HR LIMIT", "72%", "Reset 2h 14m"; gauge 72% full.
+Claude right: "WEEKLY", "38%", "Reset 3d 8h"; gauge 38% full.
+Second provider: "CODEX".
+Codex left: "5HR LIMIT", "85%", "Reset 4h 10m"; gauge 85% full.
+Codex right: "WEEKLY", "64%", "Reset 5d 2h"; gauge 64% full.
+Constraints: all example numbers are synthetic. Render exact readable text; no extra labels, annotations, captions, fake logos or plan names. Flat rectangular screen in strict 4:3 aspect ratio. Both providers fully visible at once. Keep the design realistic for a low-resolution small touchscreen. Do not add bottom navigation.
+
+SETTINGS UI PROMPT
+
+Use case: ui-mockup
+Asset type: device settings screen for the same CYD usage meter.
+Input image: Image 1 is the edit target and visual style reference, the approved first main-screen draft.
+Primary request: Transform the supplied main usage screen into a settings screen. Preserve its strict 4:3 landscape screen shape, dark navy background, crisp white typography, warm orange Claude accent, cyan Codex accent and flat embedded UI style. Replace all main usage content with the settings layout below. This is a new sibling mockup; keep the original main-screen artifact separate.
+Composition: one edge-to-edge flat screen for exactly 320 x 240 logical pixels, enlarged for presentation. No bezel, mock device, perspective, poster, external caption or annotation.
+Header, logical y=0..36: simple left-facing back chevron in a full 40 x 36 touch region, then title "SETTINGS". At the upper right a small battery icon and "72%". No gear in the settings header.
+Body layout:
+- Claude settings group at y=42..108. First row: "CLAUDE" in the same warm orange as the reference, bold readable text. A clearly ON pill switch at the far right enables/disables the entire provider, with a white knob on the right and orange track. Second row, slightly indented: "Show 5-hour limit", secondary pale text, with a separate ON switch at the far right. This subordinate switch only controls the 5-hour quota's visibility. Do not place two unlabeled switches on one row.
+- Thin divider near y=112.
+- Codex settings group at y=119..184. First row: "CODEX" in the reference cyan and a separate ON pill switch at the far right, white knob on the right. Second row: "Show 5-hour limit" and a separate ON switch at the far right. All four switches ON, to match the main-screen state. Switches about 50 x 25 native pixels; whole label rows are touch targets.
+- Thin divider near y=190.
+- A rotation control row at y=198..233: label "ROTATION" at the left, followed by four distinct equal-width angle buttons labeled exactly "0°", "90°", "180°", "270°". The current "0°" button is selected in cyan, with dark text. Remaining three have dark tracks with white text. Keep all four on one row, clearly spaced and visibly tappable, approximately 52 x 34 native pixels. The label can use small bold type to fit.
+Visible text, verbatim: "SETTINGS", "72%", "CLAUDE", "Show 5-hour limit", "CODEX", "Show 5-hour limit", "ROTATION", "0°", "90°", "180°", "270°".
+Intended behavior: settings apply immediately and persist; back returns to usage. No Save button or extra screen is needed.
+Constraints: preserve the visual family and dimensions of the reference. This must fit a real 320 x 240 display, with readable small-screen type and no clipped controls. No usage percentages, gauges, reset timers, charts, Wi-Fi setup, billing, accounts, plan selectors, themes, brightness, explanatory paragraphs or additional features. No gradients, shadows or decorative elements. Exact accurate text.

@@ -1,0 +1,54 @@
+CYD Claude + Codex usage meter — portrait UI mockups
+
+Generation method: built-in image_gen tool, adapting the earlier landscape mockups.
+Target device: 240 x 320, 2.8-inch CYD in portrait orientation.
+Generated PNGs: 1086 x 1448, exactly 3:4, enlarged concept previews rather than native firmware renders.
+Data: synthetic examples; all quota percentages represent capacity remaining.
+
+Intended behavior for implementation:
+- Default presentation is portrait.
+- The gear opens settings; back returns to usage.
+- Claude and Codex can each be enabled or disabled on-device.
+- Each provider's 5-hour gauge can be hidden independently.
+- A provider's weekly gauge expands across its section when its 5-hour gauge is hidden.
+- Supported windows come from provider data; absent windows must not display fake values. Do not hard-code window availability solely by subscription tier.
+- Rotation offers 0, 90, 180 and 270 degrees; 90 is selected in this mockup, relative to the current firmware's landscape baseline.
+- Settings apply immediately and persist across restarts.
+- Firmware, collectors, live integration and hardware readability/touch testing are not implemented or verified by these mockups.
+
+MAIN UI PROMPT
+
+Use case: ui-mockup
+Asset type: portrait CYD main usage screen.
+Input image: Image 1 is the edit target and visual style reference.
+Primary request: Adapt this existing usage-meter mockup into a truly PORTRAIT screen for the user's 240 x 320 logical-pixel, 2.8-inch CYD display. Recompose the layout for portrait; do not squeeze, crop or rotate the landscape artwork. Output one flat edge-to-edge portrait UI in EXACT 3:4 width-to-height aspect ratio, ideally 1200 x 1600 pixels, with no outside border or captions.
+Preserve: the existing dark #101820 background, white #F3F6F7 text, muted #AAB8C2 secondary text, warm orange #D99A78 Claude accent, bright cyan #63DFC1 Codex accent, thin proportional gauges and clean high-contrast visual family.
+Layout designed for 240 x 320 native pixels:
+- Header y=0..38: compact "USAGE" at the left, smaller "REMAINING" nearby, then a small battery icon and "72%", and a simple gear at the far right in a 38-pixel touch area. Scale the header typography down enough to fit all items without crowding.
+- Claude occupies the upper half beneath the header. Upper heading "CLAUDE" about 16 native pixels high. Two equal columns, native x=12..111 and x=129..228: left "5HR LIMIT", right "WEEKLY". Below these labels, equally prominent large percentages approximately 30 native pixels high. Below the percentages, a thin gauge in each column and a readable short reset countdown.
+- Provider heading near native y=53; window labels near y=80; percentages near y=98; gauges near y=139; countdowns near y=153.
+- A thin divider near native y=175.
+- Codex mirrors Claude in the lower half: heading near y=191, window labels y=218, percentages y=236, gauges y=277, countdowns y=291. Everything ends above y=310.
+Exact visible text:
+Header: "USAGE", "REMAINING", "72%".
+Claude: "CLAUDE"; left "5HR LIMIT", "72%", "Reset 2h 14m"; right "WEEKLY", "38%", "Reset 3d 8h".
+Codex: "CODEX"; left "5HR LIMIT", "85%", "Reset 4h 10m"; right "WEEKLY", "64%", "Reset 5d 2h".
+Gauge fills: Claude 72% and 38%; Codex 85% and 64%.
+Constraints: actual portrait 3:4 screen shape, all four limits visible at once, generous vertical separation, no extra UI, no charts or daily history, no device bezel, no perspective or surrounding poster. Crisp accurate text. Flat practical embedded UI, no gradients or shadows. Data is synthetic. Do not reuse the landscape composition.
+
+SETTINGS UI PROMPT
+
+Use case: ui-mockup
+Asset type: portrait CYD settings screen.
+Input image: Image 1 is the edit target and visual style reference.
+Primary request: Adapt this settings mockup to the user's 240 x 320 logical-pixel, 2.8-inch CYD display in PORTRAIT orientation. Recompose the layout to fit portrait; do not squeeze, crop or rotate the landscape artwork. Output one flat edge-to-edge portrait screen in EXACT 3:4 width-to-height aspect ratio, ideally 1200 x 1600 pixels.
+Preserve: existing dark #101820 background, white #F3F6F7 typography, muted #AAB8C2 secondary labels, warm orange #D99A78 Claude accents, bright cyan #63DFC1 Codex accents, flat high-contrast embedded UI style.
+Layout for 240 x 320 native pixels:
+- Header y=0..42: back chevron in a 40 x 40 touch area, "SETTINGS" in compact bold white text, small battery icon and "72%" at the right. All items fit the narrow 240-pixel width.
+- Claude group y=55..127: first row bold "CLAUDE" in orange and an ON pill switch at the right; second row, slightly indented, "Show 5-hour limit" in smaller pale type with its own separate ON pill switch at the right. Switches approximately 44 x 25 native pixels; whole rows are tappable. Provider first row around y=60, subordinate row around y=102.
+- Thin divider near y=140.
+- Codex group y=156..226: first row "CODEX" in cyan and ON switch at right; second row "Show 5-hour limit" with separate ON switch at right. First row around y=161, subordinate row around y=202.
+- Thin divider near y=237.
+- Rotation section below: "ROTATION" label on its own line near native y=253. Under the label, four equal-sized angle buttons in ONE row at y=272..305, with sufficient space to tap, about 50 x 33 native pixels each. Button labels exactly "0°", "90°", "180°", "270°". Select "90°" with cyan fill and dark text, representing the current portrait position; the other buttons are dark with white text.
+Text, verbatim: "SETTINGS", "72%", "CLAUDE", "Show 5-hour limit", "CODEX", "Show 5-hour limit", "ROTATION", "0°", "90°", "180°", "270°".
+Constraints: all four switches ON, knob on right, accurate text, true portrait 3:4 proportions. All labels and controls fit native 240 x 320. Use the extra portrait height for comfortable spacing. No usage gauges, charts, extra settings, explanatory paragraphs, Save button, bezel, device mockup, external annotation, perspective, gradients or shadows. Settings apply immediately and persist; back returns to usage.
