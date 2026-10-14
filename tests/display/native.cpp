@@ -204,15 +204,17 @@ int main(int argc,char **argv) {
     meter::settings::Controller settings;settings.values.position=pos;settings.values.flags=flags;settings.menu=menu;
     for(int scenario=0;scenario<10;++scenario) {
       auto sample=state;
+      settings.save_failed=scenario==6;
       if(scenario==1)sample.model.providers[1].five_hour={};
       if(scenario==2)sample.model.providers[0]=meter::Provider{};
       if(scenario==3)sample.transport_failed=true;
       if(scenario==4)for(auto &p:sample.model.providers){p.five_hour.remaining=100;p.weekly.remaining=0;}
       if(scenario==5)for(auto &p:sample.model.providers){p.five_hour.remaining=0.3;p.weekly.remaining=99.9;}
-      if(scenario==6){settings.save_failed=true;std::strcpy(sample.model.providers[0].error,"auth_missing");sample.model.providers[0].observed=0;}
+      if(scenario==6){sample.model.providers[0]={};std::strcpy(sample.model.providers[0].error,"auth_missing");}
       if(scenario==7)for(auto &p:sample.model.providers)p.resets=0;
       if(scenario==8)for(auto &p:sample.model.providers)p.resets=2147483647;
       if(scenario==9)sample.model.providers[0].resets=1;
+      assert(meter::semantics(sample.model));
       auto frame=meter::ui::project(sample,scenario==3?604800000:0,settings);frame.battery=scenario==4?100:72;
       Canvas full(pos);meter::ui::draw(full,frame,pos);
       Canvas paged(pos);
